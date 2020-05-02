@@ -1,8 +1,8 @@
 
-
-import java.nio.Buffer;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.SynchronousQueue;
+// an adapter implements the functionality of the target interface-
+//here the Deposit is the adapter delegates to the arraylist, the arraylist does it for the deposit
+// here is the deposit is a blockingque because we uses wait and notify with the put and take
+//the adaptee is the listADT & arraylist
 import utility.collection.ArrayList;
 public class Deposit //blocking queue accepts threads and makes the threads wait
 {
@@ -21,7 +21,7 @@ public class Deposit //blocking queue accepts threads and makes the threads wait
       throw new IllegalArgumentException("Null valuable");
     }
     valuableArrayList.add(valuable);
-    Printer.getInstance().print("Valuable" + valuable.getName() + valuable.getValue() + " has been added to the deposit");
+    Printer.getInstance().print( "A miner has put a " + valuable.getName()  + " worth " + valuable.getValue() + " into the deposit.");
 
   }
 
@@ -31,8 +31,9 @@ public synchronized Valuable take()
     {
       try
       {
-        System.out.println("There are no valuables" + size());
-        wait();
+        Printer.getInstance().print("There are no valuables, transporter is waiting for miner to produce.");
+        wait(6000);// transporter thread has to wait until a producer puts in a valuable
+
       }
       catch (InterruptedException e)
       {
@@ -41,7 +42,7 @@ public synchronized Valuable take()
     }
     notifyAll();
    Valuable v = valuableArrayList.remove(0);
-  Printer.getInstance().print("Valuable has been removed from the deposit: " + v.getName() + " now we have " + worth() + " in the deposit");
+  Printer.getInstance().print("A valuable transporter has removed a " +  v.getName() + " from the deposit, now we have " + worth() + " in the deposit");
    return v;
 
   }
@@ -67,9 +68,15 @@ public synchronized Valuable take()
 
  public synchronized boolean isEmpty()
   {
-    return valuableArrayList.isEmpty();
+    if(valuableArrayList.size() == 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
-
 
 
  public synchronized int size()
@@ -77,7 +84,7 @@ public synchronized Valuable take()
     return valuableArrayList.size();
   }
 
-  @Override public synchronized String toString()
+ public synchronized String toString()
   {
     return super.toString();
   }
