@@ -1,26 +1,34 @@
+import java.util.List;
+
 public class Accountant implements Runnable
 {
-  private TreasureRoom treasureRoom;
+  private TreasureRoomGuardsman treasureRoomGuardsman;
 
 
-  public Accountant(TreasureRoom treasureRoom)
+  public Accountant(TreasureRoomGuardsman treasureRoomGuardsman)
   {
-    this.treasureRoom = treasureRoom;
-    this.total = 0;
+    this.treasureRoomGuardsman = treasureRoomGuardsman;
+
   }
   @Override public void run()
   {
     while(true)
     {
-      treasureRoom.acquireReadAccess();
-      int total = treasureRoom.look();
-
+      TreasureRoomRead treasureRoomRead = treasureRoomGuardsman.acquireReadAccess();
+      List<Valuable> treasureListCopy =  treasureRoomRead.look();
+      int size = treasureListCopy.size();
+      int total = 0;
       try
       {
-
-        Thread.sleep(4000);
-        treasureRoom.releaseReadAccess();
+        for(int i = 0; i < size-1; i++)
+        {
+          int value = treasureListCopy.get(i).getValue();
+          total += value;
+        }
         Printer.getInstance().print("The treasure room has " + total );
+        treasureRoomGuardsman.releaseReadAccess();
+        Thread.sleep(4000);
+
       }
       catch (InterruptedException e)
       {

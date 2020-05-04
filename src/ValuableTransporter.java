@@ -4,14 +4,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ValuableTransporter implements Runnable
 {
   private Deposit deposit;
-  private TreasureRoom treasureRoom;
+  private TreasureRoomGuardsman treasureRoomGuardsman;
   private List<Valuable> transportersValues = null;
   private int targetWorth;
 
-  public ValuableTransporter(Deposit deposit, TreasureRoom treasureRoom)
+  public ValuableTransporter(Deposit deposit, TreasureRoomGuardsman treasureRoomGuardsman)
   {
     this.deposit = deposit;
-    this.treasureRoom = treasureRoom;
+    this.treasureRoomGuardsman = treasureRoomGuardsman;
     this.transportersValues = new ArrayList<>();
   }
 
@@ -44,9 +44,8 @@ public class ValuableTransporter implements Runnable
 
         if(TranportersListWorth() >= targetWorth)
         {
-          moveToTreasureRoom();
+          moveToTreasureRoom();// see method for write access
           Thread.sleep(4000);
-          Printer.getInstance().print("Valuable transporter is sleeping");
           targetWorth = generateRandomAmt();// creates new goal
         }
 
@@ -64,10 +63,18 @@ public class ValuableTransporter implements Runnable
     //2. call the add method
     //3. release write access
     //4. clear the arraylist
-    treasureRoom.acquireWriteAccess();
-    treasureRoom.add(transportersValues);
-    treasureRoom.releaseWriteAccess();
+    TreasureRoomWrite treasureRoomWrite = treasureRoomGuardsman.acquireWriteAccess();
+    treasureRoomWrite.add(transportersValues);
+    try
+    {
+      Thread.sleep(2000);
+    }
+    catch (InterruptedException e)
+    {
+      e.printStackTrace();
+    }
     transportersValues.clear();
+    treasureRoomGuardsman.releaseWriteAccess();
 
   }
 }

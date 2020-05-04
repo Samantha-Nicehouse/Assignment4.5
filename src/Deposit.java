@@ -23,7 +23,7 @@ public class Deposit //blocking queue accepts threads and makes the threads wait
     }
     valuableArrayList.add(valuable);
     notifyAll();//notifies all of the valtransporters that there are valuables now
-    Printer.getInstance().print( "A miner has put a " + valuable.getName()  + " worth " + valuable.getValue() + " into the deposit.");
+    Printer.getInstance().print( Thread.currentThread().getName() + " has added a " + valuable.getName()  + " worth " + valuable.getValue() + " into the deposit.");
 
   }
 
@@ -33,7 +33,7 @@ public synchronized Valuable take()
     {
       try
       {
-        Printer.getInstance().print("There are no valuables, transporter is waiting for miner to produce.");
+        Printer.getInstance().print("There are no valuables, transporter is waiting for miners to produce.");
         wait();// transporter thread has to wait until a producer puts in a valuable
         // wait should be woken up when the producer put something in it in the notify all put
 
@@ -44,7 +44,7 @@ public synchronized Valuable take()
       }
     }
    Valuable v = valuableArrayList.remove(0);
-   Printer.getInstance().print("A valuable transporter has removed a " +  v.getName() + " from the deposit, now we have " + worth() + " in the deposit");
+   Printer.getInstance().print(Thread.currentThread().getName() + " has removed a " + v.getName() + " from the deposit, now we have " + worth() + " in the deposit");
    return v;
 
   }

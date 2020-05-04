@@ -5,11 +5,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class King implements Runnable
 {
-  private TreasureRoom treasureRoom;
+  private TreasureRoomGuardsman treasureRoomGuardsman;
   private List<Valuable> kingsList;
-  public King(TreasureRoom treasureRoom)
+  public King(TreasureRoomGuardsman treasureRoomGuardsman)
   {
-    this.treasureRoom = treasureRoom;
+    this.treasureRoomGuardsman = treasureRoomGuardsman;
     this.kingsList = new ArrayList<>();
   }
 
@@ -28,32 +28,32 @@ public class King implements Runnable
       {
         int partyCost = partyCost();//party goal
         int runningTotal = 0;
+        TreasureRoomWrite treasureRoomWrite = treasureRoomGuardsman.acquireWriteAccess();
        while(runningTotal < partyCost)
         {
-          treasureRoom.acquireWriteAccess();
-          Valuable valuable = treasureRoom.retrieve();
+          Valuable valuable = treasureRoomWrite.retrieve();
             if(valuable == null)
              {
                break;
               }
           kingsList.add(valuable);
           runningTotal += valuable.getValue();
+          Thread.sleep(20000);
         }
        // when the while loop is done check if we met the target
+        System.out.println(partyCost);
         if(runningTotal >= partyCost)
         {
           Printer.getInstance().print("Party Time!!!!");
+          kingsList.clear();
+          Thread.sleep(20000);
         }
         else
           {
             Printer.getInstance().print("Party Cancelled:(");
-            treasureRoom.add(kingsList);
+            treasureRoomWrite.add(kingsList);
           }
-          treasureRoom.releaseWriteAccess();
-          kingsList.clear();
-          Thread.sleep(20000);
-
-
+          treasureRoomGuardsman.releaseWriteAccess();
         }
       catch (InterruptedException e)
       {
