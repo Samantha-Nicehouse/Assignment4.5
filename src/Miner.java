@@ -4,7 +4,7 @@ import java.util.Random;
 public class Miner implements Runnable// this is the job of the miner not the thread or person miner
 {
   private Deposit deposit;
-  private List<String> minersValuables = Mine.allMineValuables();
+  private List<String> valuableNameList = Mine.allMineValuableNames();
 
   public Miner(Deposit deposit)//tells the miner where the deposit is
   {
@@ -14,7 +14,7 @@ public class Miner implements Runnable// this is the job of the miner not the th
   public int getRandomIndex()
   {
     Random random = new Random();
-    int index = random.nextInt(minersValuables.size());
+    int index = random.nextInt(valuableNameList.size());
     return index;
   }
 
@@ -27,8 +27,8 @@ public class Miner implements Runnable// this is the job of the miner not the th
       {
 
        Thread.sleep(4000);// this is the time the miner is mining and not depositing
-        deposit.put(Mine.getValuable(minersValuables.get(getRandomIndex())));
-        // puts a valuable that it gets from the mine and the name is from the random index
+        deposit.put(Mine.getValuable(valuableNameList.get(getRandomIndex())));
+        // puts a valuable that it gets from the mine and the string name is from the random index
         //of the arraylist of the miners valuables
 
       }

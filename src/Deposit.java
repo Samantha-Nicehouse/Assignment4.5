@@ -1,7 +1,8 @@
 
 // an adapter implements the functionality of the target interface-
-//here the Deposit is the adapter delegates to the arraylist, the arraylist does it for the deposit
-// here is the deposit is a blockingque because we uses wait and notify with the put and take
+//here the Deposit is the adapter which delegates to the arraylist, the arraylist does the work for the deposit
+// here the deposit is a blockingque means use  put and take
+//it is producer and consumer means use wait and notify
 //the adaptee is the listADT & arraylist
 import utility.collection.ArrayList;
 public class Deposit //blocking queue accepts threads and makes the threads wait
@@ -21,6 +22,7 @@ public class Deposit //blocking queue accepts threads and makes the threads wait
       throw new IllegalArgumentException("Null valuable");
     }
     valuableArrayList.add(valuable);
+    notifyAll();//notifies all of the valtransporters that there are valuables now
     Printer.getInstance().print( "A miner has put a " + valuable.getName()  + " worth " + valuable.getValue() + " into the deposit.");
 
   }
@@ -32,7 +34,8 @@ public synchronized Valuable take()
       try
       {
         Printer.getInstance().print("There are no valuables, transporter is waiting for miner to produce.");
-        wait(6000);// transporter thread has to wait until a producer puts in a valuable
+        wait();// transporter thread has to wait until a producer puts in a valuable
+        // wait should be woken up when the producer put something in it in the notify all put
 
       }
       catch (InterruptedException e)
@@ -40,9 +43,8 @@ public synchronized Valuable take()
         e.printStackTrace();
       }
     }
-    notifyAll();
    Valuable v = valuableArrayList.remove(0);
-  Printer.getInstance().print("A valuable transporter has removed a " +  v.getName() + " from the deposit, now we have " + worth() + " in the deposit");
+   Printer.getInstance().print("A valuable transporter has removed a " +  v.getName() + " from the deposit, now we have " + worth() + " in the deposit");
    return v;
 
   }
