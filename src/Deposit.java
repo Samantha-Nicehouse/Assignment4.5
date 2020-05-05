@@ -33,7 +33,7 @@ public synchronized Valuable take()
     {
       try
       {
-        Printer.getInstance().print("There are no valuables, transporter is waiting for miners to produce.");
+        Printer.getInstance().print("The deposit is empty, wait for miners to produce.");
         wait();// transporter thread has to wait until a producer puts in a valuable
         // wait should be woken up when the producer put something in it in the notify all put
 

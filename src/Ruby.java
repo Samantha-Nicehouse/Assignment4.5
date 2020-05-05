@@ -7,6 +7,6 @@ public class Ruby implements Valuable
 
   @Override public int getValue()
   {
-    return 65;
+    return 25;
   }
 }

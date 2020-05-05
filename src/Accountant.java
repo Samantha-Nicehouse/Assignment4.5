@@ -12,29 +12,31 @@ public class Accountant implements Runnable
   }
   @Override public void run()
   {
-    while(true)
+    while (true)
     {
       TreasureRoomRead treasureRoomRead = treasureRoomGuardsman.acquireReadAccess();
-      List<Valuable> treasureListCopy =  treasureRoomRead.look();
+      List<Valuable> treasureListCopy = treasureRoomRead.look();
       int size = treasureListCopy.size();
+      System.out.println("treasury size " + size);
       int total = 0;
-      try
-      {
-        for(int i = 0; i < size-1; i++)
+
+        try
         {
-          int value = treasureListCopy.get(i).getValue();
-          total += value;
+          for (int i = 0; i < size - 1; i++)
+          {
+            int value = treasureListCopy.get(i).getValue();
+            Thread.sleep(500);
+            total += value;
+          }
+          Printer.getInstance().print("The treasure room has " + total);
+          treasureRoomGuardsman.releaseReadAccess();
+          Thread.sleep(10000);
         }
-        Printer.getInstance().print("The treasure room has " + total );
-        treasureRoomGuardsman.releaseReadAccess();
-        Thread.sleep(4000);
-
+        catch (InterruptedException e)
+        {
+          e.printStackTrace();
+        }
       }
-      catch (InterruptedException e)
-      {
-        e.printStackTrace();
-      }
-
     }
-  }
+
 }

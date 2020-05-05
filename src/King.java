@@ -24,6 +24,7 @@ public class King implements Runnable
 
     while (true)
     {
+
       try
       {
         int partyCost = partyCost();//party goal
@@ -38,22 +39,27 @@ public class King implements Runnable
               }
           kingsList.add(valuable);
           runningTotal += valuable.getValue();
-          Thread.sleep(20000);
+          Thread.sleep(1000);
         }
        // when the while loop is done check if we met the target
-        System.out.println(partyCost);
-        if(runningTotal >= partyCost)
-        {
-          Printer.getInstance().print("Party Time!!!!");
-          kingsList.clear();
-          Thread.sleep(20000);
-        }
-        else
-          {
-            Printer.getInstance().print("Party Cancelled:(");
-            treasureRoomWrite.add(kingsList);
-          }
-          treasureRoomGuardsman.releaseWriteAccess();
+        System.out.println("Party cost" + partyCost);
+        System.out.println("running total" + runningTotal);
+
+             if(runningTotal >= partyCost)
+             {
+                 treasureRoomGuardsman.releaseWriteAccess();
+                 Printer.getInstance().print("Party Time!!!!");
+                 kingsList.clear();
+
+             }
+              else
+              {
+                Thread.sleep(2000);
+                treasureRoomWrite.add(kingsList);
+                treasureRoomGuardsman.releaseWriteAccess();
+                Printer.getInstance().print("Party Cancelled:(");
+              }
+            Thread.sleep(20000);
         }
       catch (InterruptedException e)
       {

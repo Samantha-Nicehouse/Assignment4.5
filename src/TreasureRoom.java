@@ -6,10 +6,9 @@ public class TreasureRoom
 {
   private List<Valuable> treasureList;
 
-  
+
   public TreasureRoom()
   {
-
     this.treasureList = new ArrayList<Valuable>();
   }
 
@@ -20,7 +19,6 @@ public class TreasureRoom
     for(int i = 0; i < transportersValuables.size()-1; i++)
     {
       treasureList.add(transportersValuables.get(i));
-
     }
   }
 
@@ -37,7 +35,7 @@ public class TreasureRoom
   }
 
  public List<Valuable> look()
-  {//unmodifiable list so that the accountant cannot steal
+  {//unmodifiable list so that the accountant cannot steal, he can only read
     return Collections.unmodifiableList(treasureList);
   }
 

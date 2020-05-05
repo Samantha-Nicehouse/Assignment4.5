@@ -7,6 +7,6 @@ public class WoodenCoin implements Valuable
 
   @Override public int getValue()
   {
-    return 25;
+    return 10;
   }
 }

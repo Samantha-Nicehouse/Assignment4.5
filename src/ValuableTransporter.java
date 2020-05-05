@@ -22,7 +22,7 @@ public class ValuableTransporter implements Runnable
     return randomNum;
   }
 
-  public int TranportersListWorth()
+  public int TransportersListWorth()
   {
     int sum = 0;
     for (int i = 0; i < transportersValues.size(); i++)
@@ -37,26 +37,20 @@ public class ValuableTransporter implements Runnable
     targetWorth = generateRandomAmt(); // create initial target
     while (true)
     {
-      try
-      {
+
         Valuable valuable = deposit.take();
         transportersValues.add(valuable);
 
-        if(TranportersListWorth() >= targetWorth)
+        if(TransportersListWorth() >= targetWorth)
         {
           moveToTreasureRoom();// see method for write access
-          Thread.sleep(4000);
           targetWorth = generateRandomAmt();// creates new goal
         }
+      }
 
-      }
-      catch (InterruptedException e)
-      {
-        e.printStackTrace();
-      }
 
     }
-  }
+
 
   private void moveToTreasureRoom()
   {//1. acquire write access

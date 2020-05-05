@@ -25,12 +25,10 @@ public class Miner implements Runnable// this is the job of the miner not the th
     {
       try
       {
-
-       Thread.sleep(4000);// this is the time the miner is mining and not depositing
+        Thread.sleep(4000);// this is the time the miner is mining and not depositing
         deposit.put(Mine.getValuable(valuableNameList.get(getRandomIndex())));
         // puts a valuable that it gets from the mine and the string name is from the random index
         //of the arraylist of the miners valuables
-
       }
       catch (InterruptedException e)
       {

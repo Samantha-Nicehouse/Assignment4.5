@@ -7,6 +7,6 @@ public class Jewel implements Valuable
 
   @Override public int getValue()
   {
-    return 70;
+    return 15;
   }
 }

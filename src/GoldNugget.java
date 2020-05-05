@@ -7,6 +7,6 @@ public class GoldNugget implements Valuable
 
   @Override public int getValue()
   {
-    return 75;
+    return 30;
   }
 }
