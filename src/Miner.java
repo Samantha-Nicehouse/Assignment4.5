@@ -17,7 +17,7 @@ public class Miner implements Runnable// this is the job of the miner not the th
     int index = random.nextInt(valuableNameList.size());
     return index;
   }
-
+/////////////
   @Override public void run()
   {
 
