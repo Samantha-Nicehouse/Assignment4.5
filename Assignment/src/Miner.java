@@ -18,7 +18,7 @@ public class Miner implements Runnable// this is the job of the miner not the th
 
 
 
-  public synchronized Valuable mineValuable()
+  public Valuable mineValuable()
   {
     valuables = new ArrayList<>();
     valuables.add(Mine.getValuable("Diamond"));
