@@ -15,29 +15,39 @@ public class Mine //flyweight factory
     Valuable valuable = map.get(name);
     if (valuable == null)
     {
-      switch(name)
+      synchronized (map) //thread safe
       {
-        case "Diamond":
-          valuable = new Diamond();
-          map.put("Diamond", valuable); break;
+        valuable = map.get(name);
+        if (valuable == null)
+          switch (name)
+          {
+            case "Diamond":
+              valuable = new Diamond();
+              map.put("Diamond", valuable);
+              break;
 
-        case "GoldNugget":
-          valuable = new GoldNugget();
-          map.put("GoldNugget", valuable); break;
+            case "GoldNugget":
+              valuable = new GoldNugget();
+              map.put("GoldNugget", valuable);
+              break;
 
-        case "Jewel":
-          valuable = new Jewel();
-          map.put("Jewel", valuable); break;
+            case "Jewel":
+              valuable = new Jewel();
+              map.put("Jewel", valuable);
+              break;
 
-        case "Ruby":
-          valuable = new Ruby();
-          map.put("Ruby", valuable); break;
+            case "Ruby":
+              valuable = new Ruby();
+              map.put("Ruby", valuable);
+              break;
 
-        case "WoodenCoin":
-          valuable = new WoodenCoin();
-          map.put("WoodenCoin", valuable);
+            case "WoodenCoin":
+              valuable = new WoodenCoin();
+              map.put("WoodenCoin", valuable);
+          }
+      }
     }
-  }
       return valuable;
-  }
+    }
+
 }
