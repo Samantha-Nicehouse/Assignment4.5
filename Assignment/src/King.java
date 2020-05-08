@@ -42,8 +42,8 @@ public class King implements Runnable
           Thread.sleep(1000);
         }
        // when the while loop is done check if we met the target
-        System.out.println("Party cost" + partyCost);
-        System.out.println("running total" + runningTotal);
+        System.out.println("Party cost " + partyCost);
+        System.out.println("Running total " + runningTotal);
 
              if(runningTotal >= partyCost)
              {
