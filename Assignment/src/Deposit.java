@@ -5,13 +5,15 @@
 //it is producer and consumer means use wait and notify
 //the adaptee is the listADT & arraylist
 import utility.collection.ArrayList;
-public class Deposit //blocking queue accepts threads and makes the threads wait
+
+public class Deposit implements
+    Buffer<Valuable>//blocking queue accepts threads and makes the threads wait
 {
-  private ArrayList<Valuable> valuableArrayList; //creates an array list of valuables
+  private ArrayList<Valuable> valuables; //creates an array list of valuables
 
   public Deposit()
   {
-    this.valuableArrayList = new ArrayList<>();
+    this.valuables = new ArrayList<>();
   }
 
  public synchronized void put(Valuable valuable)
@@ -21,10 +23,9 @@ public class Deposit //blocking queue accepts threads and makes the threads wait
     {
       throw new IllegalArgumentException("Null valuable");
     }
-    valuableArrayList.add(valuable);
+    valuables.add(valuable);
     notifyAll();//notifies all of the valtransporters that there are valuables now
-    Printer.getInstance().print( Thread.currentThread().getName() + " has added a " + valuable.getName()  + " worth " + valuable.getValue() + " into the deposit.");
-
+    Printer.getInstance().print( Thread.currentThread().getName() + " has added a " + valuable.getName() + " worth " + valuable.getValue() + " into the deposit.");
   }
 
 public synchronized Valuable take()
@@ -35,7 +36,7 @@ public synchronized Valuable take()
       {
         Printer.getInstance().print("The deposit is empty, wait for miners to produce.");
         wait();// transporter thread has to wait until a producer puts in a valuable
-        // wait should be woken up when the producer put something in it in the notify all put
+        // wait should be woken up when the producer put something in it in the notify all in the put method
 
       }
       catch (InterruptedException e)
@@ -43,34 +44,34 @@ public synchronized Valuable take()
         e.printStackTrace();
       }
     }
-   Valuable v = valuableArrayList.remove(0);
-   Printer.getInstance().print(Thread.currentThread().getName() + " has removed a " + v.getName() + " from the deposit, now we have " + worth() + " in the deposit");
-   return v;
+   Valuable valuable = valuables.remove(0);
+   Printer.getInstance().print(Thread.currentThread().getName() + " has removed a " + valuable.getName() + " from the deposit, now we have " + worth() + " in the deposit");
+   return valuable;
 
   }
 
   private synchronized int worth()
   {
     int sum = 0;
-    for (int i = 0; i < valuableArrayList.size(); i++)
+    for (int i = 0; i < valuables.size(); i++)
     {
-      sum += valuableArrayList.get(i).getValue();
+      sum += valuables.get(i).getValue();
     }
     return sum;
   }
  public synchronized Valuable look()
   {
-    if (valuableArrayList.isEmpty())
+    if (valuables.isEmpty())
     {
       return null;
     }
 
-    return valuableArrayList.get(0);
+    return valuables.get(0);
   }
 
  public synchronized boolean isEmpty()
   {
-    if(valuableArrayList.size() == 0)
+    if(valuables.size() == 0)
     {
       return true;
     }
@@ -80,10 +81,14 @@ public synchronized Valuable take()
     }
   }
 
-
- public synchronized int size()
+  @Override public boolean isFull()
   {
-    return valuableArrayList.size();
+    return false;
+  }
+
+  public synchronized int size()
+  {
+    return valuables.size();
   }
 
  public synchronized String toString()

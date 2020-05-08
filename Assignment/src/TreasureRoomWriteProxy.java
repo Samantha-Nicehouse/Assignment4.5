@@ -8,9 +8,9 @@ public class TreasureRoomWriteProxy implements TreasureRoomWrite
   {
     this.treasureRoom = treasureRoom;
   }
-  @Override public void add(List<Valuable> treasureList)
+  @Override public void add(List<Valuable> valuables)
   {
-    treasureRoom.add(treasureList);
+    treasureRoom.add(valuables);
   }
 
   @Override public Valuable retrieve()

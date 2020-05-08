@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TreasureRoom
+public class TreasureRoom implements TreasureRoomRead, TreasureRoomWrite
 {
-  private List<Valuable> treasureList;
+  private ArrayList<Valuable> treasureList;
 
 
   public TreasureRoom()
@@ -12,16 +12,17 @@ public class TreasureRoom
     this.treasureList = new ArrayList<Valuable>();
   }
 
+  @Override
  public void add(List<Valuable> transportersValuables)
   {//1. loop through the transporters valuables
     //2. for each valuable, add to treasure list
 
-    for(int i = 0; i < transportersValuables.size()-1; i++)
+    for(int i = 0; i < transportersValuables.size(); i++)
     {
       treasureList.add(transportersValuables.get(i));
     }
   }
-
+  @Override
   public Valuable retrieve()
   {//1. remove valuable from room
     //2. check that that the value is not null
@@ -34,6 +35,7 @@ public class TreasureRoom
     return null;
   }
 
+  @Override
  public List<Valuable> look()
   {//unmodifiable list so that the accountant cannot steal, he can only read
     return Collections.unmodifiableList(treasureList);

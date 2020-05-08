@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class King implements Runnable
 {
   private TreasureRoomGuardsman treasureRoomGuardsman;
-  private List<Valuable> kingsList;
+  private ArrayList<Valuable> kingsList;
   public King(TreasureRoomGuardsman treasureRoomGuardsman)
   {
     this.treasureRoomGuardsman = treasureRoomGuardsman;

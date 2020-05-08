@@ -3,16 +3,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ValuableTransporter implements Runnable
 {
-  private Deposit deposit;
+  private Buffer deposit;
   private TreasureRoomGuardsman treasureRoomGuardsman;
-  private List<Valuable> transportersValues = null;
+  private ArrayList<Valuable> valuables = null;
   private int targetWorth;
 
-  public ValuableTransporter(Deposit deposit, TreasureRoomGuardsman treasureRoomGuardsman)
+  public ValuableTransporter(Buffer deposit, TreasureRoomGuardsman treasureRoomGuardsman)
   {
-    this.deposit = deposit;
+    this.deposit= deposit;
     this.treasureRoomGuardsman = treasureRoomGuardsman;
-    this.transportersValues = new ArrayList<>();
+    this.valuables = new ArrayList<>();
   }
 
   public int generateRandomAmt()
@@ -25,9 +25,9 @@ public class ValuableTransporter implements Runnable
   public int TransportersListWorth()
   {
     int sum = 0;
-    for (int i = 0; i < transportersValues.size(); i++)
+    for (int i = 0; i < valuables.size(); i++)
     {
-      sum += transportersValues.get(i).getValue();
+      sum += valuables.get(i).getValue();
     }
     return sum;
   }
@@ -38,8 +38,8 @@ public class ValuableTransporter implements Runnable
     while (true)
     {
 
-        Valuable valuable = deposit.take();
-        transportersValues.add(valuable);
+        Valuable valuable = (Valuable) deposit.take(); // cast the deposit object(Jewel,Ruby,Diamond,to a valuable
+        valuables.add(valuable);
 
         if(TransportersListWorth() >= targetWorth)
         {
@@ -58,7 +58,7 @@ public class ValuableTransporter implements Runnable
     //3. release write access
     //4. clear the arraylist
     TreasureRoomWrite treasureRoomWrite = treasureRoomGuardsman.acquireWriteAccess();
-    treasureRoomWrite.add(transportersValues);
+    treasureRoomWrite.add(valuables);
     try
     {
       Thread.sleep(2000);
@@ -67,7 +67,7 @@ public class ValuableTransporter implements Runnable
     {
       e.printStackTrace();
     }
-    transportersValues.clear();
+    valuables.clear();
     treasureRoomGuardsman.releaseWriteAccess();
 
   }

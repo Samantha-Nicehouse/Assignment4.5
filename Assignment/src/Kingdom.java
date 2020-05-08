@@ -2,7 +2,8 @@ public class Kingdom
 {
   public static void main(String[] args)
   {
-    Deposit d1 = new Deposit();
+  
+    Buffer d1 = new Deposit();
     TreasureRoom t1 = new TreasureRoom();
     TreasureRoomRead treasureRoomRead = new TreasureRoomReadProxy(t1);
     TreasureRoomWrite treasureRoomWrite = new TreasureRoomWriteProxy(t1);
@@ -27,7 +28,7 @@ public class Kingdom
     Thread accountant1 = new Thread(new Accountant(treasureRoomGuardsman)," Accountant 1");
     accountant1.start();
 
-    Thread king = new Thread(new King(treasureRoomGuardsman), "The king");
+    Thread king = new Thread(new King(treasureRoomGuardsman), "Your Majesty");
     king.start();
 
     Thread accountant2 = new Thread(new Accountant(treasureRoomGuardsman)," Accountant 2");

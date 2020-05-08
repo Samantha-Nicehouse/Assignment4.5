@@ -6,13 +6,9 @@ public class Mine //flyweight factory
 {
   private static Map<String, Valuable> map = new HashMap<>();
 // this means we do not need to create an instance in test to use it
-  private static final List<String> mineValuableNameList = List.of("Diamond", "GoldNugget", "Ruby",
-    "Jewel", "WoodenCoin");
 
-  public static List<String> allMineValuableNames()
-  {
-      return mineValuableNameList;
-  }
+
+
 
   public static Valuable getValuable(String name)//puts valuable by name into the map
   {
