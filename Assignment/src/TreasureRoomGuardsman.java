@@ -108,4 +108,5 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     Printer.getInstance().print(Thread.currentThread().getName() + " is leaving the treasure room.");
     notifyAll();
   }
+
 }

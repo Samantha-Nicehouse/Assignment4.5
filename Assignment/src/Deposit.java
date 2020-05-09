@@ -1,27 +1,42 @@
 
 // an adapter implements the functionality of the target interface-
 //here the Deposit is the adapter which delegates to the arraylist, the arraylist does the work for the deposit
-// here the deposit is a blockingque means use  put and take
-//it is producer and consumer means use wait and notify
-//the adaptee is the listADT & arraylist
+// here the deposit is a blockingqueue means use  put and take
+// producer and consumer means use wait and notify,
+//the monitor deposit is the blockingque, depositblockingqueue is the monitor
+//the adaptee is the arraylist which has its own interface listADT
 import utility.collection.ArrayList;
 
 public class Deposit implements
     Buffer<Valuable>//blocking queue accepts threads and makes the threads wait
 {
-  private ArrayList<Valuable> valuables; //creates an array list of valuables
+  private ArrayList<Valuable> valuables;
 
   public Deposit()
   {
+
     this.valuables = new ArrayList<>();
   }
 
  public synchronized void put(Valuable valuable)
   {
-
+    /*
     if (valuable == null)
     {
       throw new IllegalArgumentException("Null valuable");
+      //don't think this is necessary, disable for now
+    }*/
+    while(isFull())
+    {
+      try
+      {
+        Printer.getInstance().print(Thread.currentThread().getName() + " you have to wait to deposit, the deposit is full, the deposit has " + worth() + " of valuables");
+        wait();
+      }
+      catch (InterruptedException e)
+      {
+        e.printStackTrace();
+      }
     }
     valuables.add(valuable);
     notifyAll();//notifies all of the valtransporters that there are valuables now
@@ -83,7 +98,14 @@ public synchronized Valuable take()
 
   @Override public boolean isFull()
   {
-    return false;
+    if (worth() >= 1000)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 
   public synchronized int size()

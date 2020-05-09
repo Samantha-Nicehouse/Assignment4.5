@@ -15,7 +15,8 @@ public class Mine //flyweight factory
     Valuable valuable = map.get(name);
     if (valuable == null)
     {
-      synchronized (map) //thread safe
+      synchronized (map) //thread safe, wow now so slow, does it really matter, two miners can be in the mine at the same time
+          //seems to be less repeat valuables in succession between miners with thread safe????
       {
         valuable = map.get(name);
         if (valuable == null)
