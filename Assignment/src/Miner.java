@@ -12,7 +12,7 @@ public class Miner implements Runnable// this is the job of the miner not the th
   public Miner(Buffer deposit)//tells the miner where the deposit is
   {
     this.deposit = deposit;
-
+    valuables = new ArrayList<>();
 
   }
 
@@ -20,7 +20,7 @@ public class Miner implements Runnable// this is the job of the miner not the th
 
   public Valuable mineValuable()
   {
-    valuables = new ArrayList<>();
+
     valuables.add(Mine.getValuable("Diamond"));
     valuables.add(Mine.getValuable("GoldNugget"));
     valuables.add(Mine.getValuable("Jewel"));
@@ -31,11 +31,7 @@ public class Miner implements Runnable// this is the job of the miner not the th
     return valuables.get(index);
   }
 
-  public synchronized void removeValuable()
-  {
-    valuables.remove(mineValuable());
-  }
-/////////////
+
   @Override public void run()
   {
 
@@ -44,10 +40,10 @@ public class Miner implements Runnable// this is the job of the miner not the th
       try
       {
       /*the miner gets one valuable, deposits one valuable and then starts again as per Assignment*/
-        Thread.sleep(2000);// this is the time the miner is mining and not depositing
+        Thread.sleep(1000);// this is the time the miner is mining and not depositing
           Valuable valuable = mineValuable();
           deposit.put(valuable);
-          removeValuable();
+          valuables.clear();
       }
 
       catch (InterruptedException e)
