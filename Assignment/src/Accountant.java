@@ -22,7 +22,7 @@ public class Accountant implements Runnable
 
         try
         {
-          for (int i = 0; i < size - 1; i++)
+          for (int i = 0; i < size; i++)
           {
             int value = treasureListCopy.get(i).getValue();
             Thread.sleep(500);

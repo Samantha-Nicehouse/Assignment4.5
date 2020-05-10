@@ -1,3 +1,4 @@
+import javax.print.attribute.AttributeSet;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
@@ -61,6 +62,7 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
   {
     readers--;
     Printer.getInstance().print(Thread.currentThread().getName() + " has left the treasure room");
+
     if(readers == 0)// if there are no more accountants, notify everyone in the queue
     {
       notifyAll();
@@ -108,4 +110,6 @@ public class TreasureRoomGuardsman implements TreasureRoomDoor
     Printer.getInstance().print(Thread.currentThread().getName() + " is leaving the treasure room.");
     notifyAll();
   }
+
+
 }

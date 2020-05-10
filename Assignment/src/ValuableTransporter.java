@@ -1,3 +1,5 @@
+import utility.collection.ListADT;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -5,7 +7,7 @@ public class ValuableTransporter implements Runnable
 {
   private Buffer deposit;
   private TreasureRoomGuardsman treasureRoomGuardsman;
-  private ArrayList<Valuable> valuables = null;
+  private List<Valuable> valuables = null;
   private int targetWorth;
 
   public ValuableTransporter(Buffer deposit, TreasureRoomGuardsman treasureRoomGuardsman)
@@ -38,7 +40,7 @@ public class ValuableTransporter implements Runnable
     while (true)
     {
 
-        Valuable valuable = (Valuable) deposit.take(); // cast the deposit object(Jewel,Ruby,Diamond,to a valuable
+        Valuable valuable = (Valuable) deposit.take(); // cast the deposit object(Jewel,Ruby,Diamond,to a valuable it was already cast though so I don't know why this is happening
         valuables.add(valuable);
 
         if(TransportersListWorth() >= targetWorth)
@@ -69,6 +71,5 @@ public class ValuableTransporter implements Runnable
     }
     valuables.clear();
     treasureRoomGuardsman.releaseWriteAccess();
-
   }
 }

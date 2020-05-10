@@ -1,3 +1,5 @@
+import utility.collection.ListADT;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -6,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class King implements Runnable
 {
   private TreasureRoomGuardsman treasureRoomGuardsman;
-  private ArrayList<Valuable> kingsList;
+  private List<Valuable> kingsList;
   public King(TreasureRoomGuardsman treasureRoomGuardsman)
   {
     this.treasureRoomGuardsman = treasureRoomGuardsman;
@@ -42,8 +44,8 @@ public class King implements Runnable
           Thread.sleep(1000);
         }
        // when the while loop is done check if we met the target
-        System.out.println("Party cost" + partyCost);
-        System.out.println("running total" + runningTotal);
+        System.out.println("Party cost " + partyCost);
+        System.out.println("Running total " + runningTotal);
 
              if(runningTotal >= partyCost)
              {
