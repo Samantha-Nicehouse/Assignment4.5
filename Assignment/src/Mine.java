@@ -8,8 +8,6 @@ public class Mine //flyweight factory
 // this means we do not need to create an instance in test to use it
 
 
-
-
   public static Valuable getValuable(String name)//puts valuable by name into the map
   {
     Valuable valuable = map.get(name);

@@ -1,15 +1,17 @@
+import utility.collection.ListADT;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class TreasureRoom implements TreasureRoomRead, TreasureRoomWrite
 {
-  private ArrayList<Valuable> treasureList;
+  private List<Valuable> treasureList;
 
 
   public TreasureRoom()
   {
-    this.treasureList = new ArrayList<Valuable>();
+    this.treasureList =new ArrayList<>();
   }
 
   @Override

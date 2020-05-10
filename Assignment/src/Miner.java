@@ -6,29 +6,27 @@ public class Miner implements Runnable// this is the job of the miner not the th
 
 {
   private Buffer deposit;
-  private ArrayList<Valuable> valuables;
+  private List<String> valuableNames;
 
 
   public Miner(Buffer deposit)//tells the miner where the deposit is
   {
     this.deposit = deposit;
-    valuables = new ArrayList<>();
-
+    valuableNames = new ArrayList<>();
   }
 
 
 
-  public Valuable mineValuable()
+  public String mineValuable()
   {
-
-    valuables.add(Mine.getValuable("Diamond"));
-    valuables.add(Mine.getValuable("GoldNugget"));
-    valuables.add(Mine.getValuable("Jewel"));
-    valuables.add(Mine.getValuable("Ruby"));
-    valuables.add(Mine.getValuable("WoodenCoin"));
+    valuableNames.add("Diamond");
+    valuableNames.add("GoldNugget");
+    valuableNames.add("Jewel");
+    valuableNames.add("Ruby");
+    valuableNames.add("WoodenCoin");
     Random random = new Random();
-    int index = random.nextInt(valuables.size());
-    return valuables.get(index);
+    int index = random.nextInt(valuableNames.size());
+    return valuableNames.get(index);
   }
 
 
@@ -41,9 +39,8 @@ public class Miner implements Runnable// this is the job of the miner not the th
       {
       /*the miner gets one valuable, deposits one valuable and then starts again as per Assignment*/
         Thread.sleep(1000);// this is the time the miner is mining and not depositing
-          Valuable valuable = mineValuable();
+          Valuable valuable = Mine.getValuable(mineValuable());
           deposit.put(valuable);
-          valuables.clear();
       }
 
       catch (InterruptedException e)
@@ -52,5 +49,6 @@ public class Miner implements Runnable// this is the job of the miner not the th
       }
     }
   }
+
 }
 

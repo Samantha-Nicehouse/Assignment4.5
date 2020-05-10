@@ -6,11 +6,14 @@
 //the monitor deposit is the blockingque, depositblockingqueue is the monitor
 //the adaptee is the arraylist which has its own interface listADT
 import utility.collection.ArrayList;
+import utility.collection.ListADT;
+
+import java.util.List;
 
 public class Deposit implements
     Buffer<Valuable>//blocking queue accepts threads and makes the threads wait
 {
-  private ArrayList<Valuable> valuables;
+  private ListADT<Valuable> valuables;
 
   public Deposit()
   {
@@ -20,12 +23,12 @@ public class Deposit implements
 
  public synchronized void put(Valuable valuable)
   {
-    /*
+
     if (valuable == null)
     {
       throw new IllegalArgumentException("Null valuable");
-      //don't think this is necessary, disable for now
-    }*/
+
+    }
     while(isFull())
     {
       try

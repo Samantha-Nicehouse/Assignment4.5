@@ -1,3 +1,5 @@
+import utility.collection.ListADT;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -5,7 +7,7 @@ public class ValuableTransporter implements Runnable
 {
   private Buffer deposit;
   private TreasureRoomGuardsman treasureRoomGuardsman;
-  private ArrayList<Valuable> valuables = null;
+  private List<Valuable> valuables = null;
   private int targetWorth;
 
   public ValuableTransporter(Buffer deposit, TreasureRoomGuardsman treasureRoomGuardsman)
@@ -69,6 +71,5 @@ public class ValuableTransporter implements Runnable
     }
     valuables.clear();
     treasureRoomGuardsman.releaseWriteAccess();
-
   }
 }

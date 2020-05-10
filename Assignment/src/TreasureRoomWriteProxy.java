@@ -1,3 +1,5 @@
+import utility.collection.ListADT;
+
 import java.util.List;
 
 public class TreasureRoomWriteProxy implements TreasureRoomWrite
